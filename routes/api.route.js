@@ -64,4 +64,12 @@ router.delete('/admin/employees/:id', verifyUser,  async(req, res)=>{
     }
 })
 
+router.get('/download', async(req, res)=>{
+    res.setHeader("Access-Control-Expose-Headers", "Content-Disposition")
+    res.download('/home/sajjad/Downloads/Screencast from 24-08-22 02:28:28 PM IST.webm', (err)=>{
+        if(err) return console.log(err)
+        console.log("downloaded")
+    })
+})
+
 module.exports = router;

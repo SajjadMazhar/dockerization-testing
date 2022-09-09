@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const morgan = require('morgan');
 require('dotenv').config();
 const cors = require('cors')
+const os = require('os')
 const { mongoConnect } = require('./config/db.config')
 mongoConnect()
 
@@ -13,7 +14,7 @@ app.use(morgan('dev'));
 app.use(cors())
 
 app.get('/', async (req, res, next) => {
-  res.send({ message: 'Awesome it works 🐻' });
+  res.send({ message:`reverse proxying container: ${os.hostname}` });
 });
 
 app.use('/api', require('./routes/api.route'));

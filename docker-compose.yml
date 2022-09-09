@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  # Mongodb services
+  # Mongodb service
   mongo_db:
     container_name: db_container
     image: mongo:latest
@@ -12,10 +12,22 @@ services:
       - mongo_db:/data/db 
 
   # node api service
+  # api:
+  #   build: .
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #     PORT: 3000
+  #     MONGO_URI: mongodb://mongo_db:27017/companydb
+  #     JWT_SECRET: qwerty
+  #   depends_on:
+  #     - mongo_db
+
+  # load balancer with nginx
   api:
     build: .
-    ports:
-      - 3000:3000
     volumes:
       - .:/app
     environment:
@@ -25,5 +37,16 @@ services:
     depends_on:
       - mongo_db
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    depends_on:
+      - api
+    ports:
+      - 3000:3000
+
+
 volumes:
   mongo_db: {}
+
