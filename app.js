@@ -14,7 +14,7 @@ app.use(morgan('dev'));
 app.use(cors())
 
 app.get('/', async (req, res, next) => {
-  res.send({ message:`reverse proxying container: ${os.hostname}` });
+  res.send({ message:`reverse proxying containers: ${os.hostname}` });
 });
 
 app.use('/api', require('./routes/api.route'));
